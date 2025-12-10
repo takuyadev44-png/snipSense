@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>SnipSense Editor</title>
   <style>
-    /* CSSは前回と同じなので、ボタン部分だけ変更します */
     body { margin: 0; overflow: hidden; background-color: #1e1e1e; display: flex; flex-direction: column; height: 100vh; font-family: "Segoe UI", sans-serif; border: 1px solid #444; box-sizing: border-box; }
     #title-bar { height: 32px; flex-shrink: 0; background: #202020; display: flex; justify-content: space-between; align-items: center; padding-left: 10px; border-bottom: 1px solid #333; -webkit-app-region: drag; z-index: 200; }
     #app-title { font-size: 12px; color: #ccc; }
@@ -36,16 +35,19 @@
     .color-dot.active { border-color: white; transform: scale(1.2); }
     #btn-save { background: #0078D4; color: white; padding: 0 20px; height: 36px; border-radius: 4px; font-weight: 600; border: none; cursor: pointer; margin-left: 10px; }
     #btn-save:hover { background: #1084E0; }
-    
-    /* ★変更: コピーボタン（オレンジ系） */
     #btn-copy { background: #FF9100; color: white; width: 36px; height: 36px; border-radius: 4px; border: none; cursor: pointer; margin-left: 5px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     #btn-copy:hover { background: #FFAB40; transform: translateY(-1px); }
     #btn-copy svg { width: 20px; height: 20px; fill: currentColor; }
-
     #btn-discard { background: rgba(255, 59, 48, 0.2); color: #ff3b30; width: 36px; height: 36px; border-radius: 4px; border: none; cursor: pointer; margin-left: 5px; display: flex; align-items: center; justify-content: center; }
     #btn-discard:hover { background: rgba(255, 59, 48, 0.4); color: white; }
     #btn-discard svg { width: 18px; height: 18px; fill: currentColor; }
     .separator { width: 1px; height: 20px; background: rgba(255,255,255,0.2); margin: 0 5px; }
+    
+    /* ★追加: フォントサイズ入力欄のスタイル */
+    .size-control { display: flex; align-items: center; gap: 5px; margin-left: 5px; }
+    .size-input { width: 40px; background: rgba(0,0,0,0.3); border: 1px solid #555; color: white; padding: 4px; border-radius: 4px; text-align: center; font-size: 12px; outline: none; }
+    .size-label { font-size: 11px; color: #aaa; }
+
     ::-webkit-scrollbar { width: 12px; height: 12px; }
     ::-webkit-scrollbar-track { background: #1e1e1e; }
     ::-webkit-scrollbar-thumb { background: #444; border-radius: 6px; }
@@ -90,17 +92,23 @@
         <div class="color-dot active" style="background:#ff4d4d;" data-color="#ff4d4d"></div>
         <div class="color-dot" style="background:#ffeb3b;" data-color="#ffeb3b"></div>
         <div class="color-dot" style="background:#00e676;" data-color="#00e676"></div>
+        
+        <div class="size-control">
+           <span class="size-label">Size</span>
+           <input type="number" id="input-font-size" class="size-input" value="24" min="8" max="100" step="2">
+        </div>
+
         <div class="separator"></div>
         <button id="tool-pen" class="tool-btn active" title="Pen"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
         <button id="tool-rect" class="tool-btn" title="Rectangle"><svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm16 16H5V5h14v14z"/></svg></button>
+        <button id="tool-bubble" class="tool-btn" title="Bubble"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" fill="currentColor"/></svg></button>
+        
         <button id="tool-undo" class="tool-btn" title="Undo"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg></button>
         <div class="separator"></div>
         <button id="btn-save">Save</button>
-        
         <button id="btn-copy" title="Copy to Clipboard">
           <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
         </button>
-
         <button id="btn-discard" title="Discard"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
       </div>
     </div>
